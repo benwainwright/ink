@@ -7,7 +7,7 @@ import originalIsCi from 'is-ci';
 import autoBind from 'auto-bind';
 import signalExit from 'signal-exit';
 import patchConsole from 'patch-console';
-import {type FiberRoot} from 'react-reconciler';
+import {Thenable, type FiberRoot} from 'react-reconciler';
 // eslint-disable-next-line n/file-extension-in-import
 import Yoga from 'yoga-wasm-web/auto';
 import reconciler from './reconciler.js';
@@ -16,6 +16,7 @@ import * as dom from './dom.js';
 import logUpdate, {type LogUpdate} from './log-update.js';
 import instances from './instances.js';
 import App from './components/App.js';
+import {getAct} from './ink-act.js';
 
 const isCi = process.env['CI'] === 'false' ? false : originalIsCi;
 const noop = () => {};
@@ -211,6 +212,11 @@ export default class Ink {
 		);
 
 		reconciler.updateContainer(tree, this.container, null, noop);
+	}
+
+	act(callback: () => Thenable<unknown>) {
+		const inkAct = getAct(reconciler);
+		return inkAct(callback);
 	}
 
 	writeToStdout(data: string): void {

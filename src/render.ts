@@ -44,6 +44,7 @@ export type RenderOptions = {
 };
 
 export type Instance = {
+	act: Ink['act'];
 	/**
 	 * Replace previous root node with a new one or update props of the current root node.
 	 */
@@ -91,6 +92,7 @@ const render: RenderFunction = (node, options): Instance => {
 	instance.render(node);
 
 	return {
+		act: instance.act,
 		rerender: instance.render,
 		unmount() {
 			instance.unmount();
