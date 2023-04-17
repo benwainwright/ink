@@ -1,6 +1,8 @@
 import createReconciler, {Thenable} from 'react-reconciler';
 import enqueueTask from './enque-task.js';
 
+const __DEV__ = true;
+
 export const getAct = (reconciler: ReturnType<typeof createReconciler>) => {
 	// we track the 'depth' of the act() calls with this counter,
 	// so we can tell if any async act() calls try to run in parallel.

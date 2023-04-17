@@ -1,3 +1,5 @@
+const __DEV__ = true;
+
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
